@@ -1,0 +1,38 @@
+{
+  "name": "@drewpackages/host-common",
+  "version": "1.0.0",
+  "description": "",
+  "main": "out/index.js",
+  "types": "out/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf dist && rollup -c"
+  },
+  "files": [
+    "out",
+    "README.md"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@drewpackages/engine": "^0.3.1",
+    "dockerode": "^4.0.2",
+    "fs-extra": "^11.2.0",
+    "memory-streams": "^0.1.3",
+    "simple-git": "^3.25.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/dockerode": "^3.3.31",
+    "@types/fs-extra": "^11.0.4",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.20.0"
+  }
+}
