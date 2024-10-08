@@ -6,9 +6,9 @@ export class CombinedConfigResolver implements IEnvironmentResolver {
   private readonly envResolver: EnvConfigResolver;
   private readonly fsResolver: StoredConfigResolver;
 
-  constructor(configFilePath: string) {
-    this.envResolver = new EnvConfigResolver();
-    this.fsResolver = new StoredConfigResolver(configFilePath);
+  constructor(env: EnvConfigResolver, fs: StoredConfigResolver) {
+    this.envResolver = env;
+    this.fsResolver = fs;
   }
 
   async getEnv(name: string): Promise<string> {
