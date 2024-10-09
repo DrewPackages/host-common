@@ -1,12 +1,14 @@
 import { IEnvironmentResolver } from "@drewpackages/engine";
-import { EnvConfigResolver } from "./env";
-import { StoredConfigResolver } from "./stored";
+import { IEnvironmentChanger } from "./types";
 
 export class CombinedConfigResolver implements IEnvironmentResolver {
-  private readonly envResolver: EnvConfigResolver;
-  private readonly fsResolver: StoredConfigResolver;
+  private readonly envResolver: IEnvironmentResolver;
+  private readonly fsResolver: IEnvironmentResolver & IEnvironmentChanger;
 
-  constructor(env: EnvConfigResolver, fs: StoredConfigResolver) {
+  constructor(
+    env: IEnvironmentResolver,
+    fs: IEnvironmentResolver & IEnvironmentChanger
+  ) {
     this.envResolver = env;
     this.fsResolver = fs;
   }

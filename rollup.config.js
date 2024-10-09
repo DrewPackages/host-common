@@ -6,11 +6,18 @@ import json from "@rollup/plugin-json";
 
 export default {
   input: "src/index.ts",
-  output: {
-    dir: "out",
-    format: "esm",
-    entryFileNames: "[name].js",
-  },
+  output: [
+    {
+      dir: "out",
+      format: "esm",
+      entryFileNames: "[name].mjs",
+    },
+    {
+      dir: "out",
+      format: "cjs",
+      entryFileNames: "[name].cjs",
+    },
+  ],
   treeshake: "recommended",
   external: ["ssh2"],
   plugins: [

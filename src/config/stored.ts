@@ -6,8 +6,11 @@ import {
   readFileSync,
   writeFileSync,
 } from "fs-extra";
+import { IEnvironmentChanger } from "./types";
 
-export class StoredConfigResolver implements IEnvironmentResolver {
+export class StoredConfigResolver
+  implements IEnvironmentResolver, IEnvironmentChanger
+{
   constructor(private readonly configFilePath: string) {
     if (!existsSync(configFilePath)) {
       createFileSync(this.configFilePath);
