@@ -16,7 +16,6 @@ on:
       - ".github/workflows/npm-publish.yml"
 
 jobs:
-
   publish-npm:
     permissions:
       contents: write
@@ -36,7 +35,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag-prefix: "v"
-      - run: pnpm i
+      - run: pnpm i --no-frozen-lockfile
       - run: pnpm build
       - run: pnpm publish --no-git-checks --access public
         env:
