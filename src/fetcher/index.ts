@@ -24,7 +24,10 @@ async function isEmptyDir(path: string) {
 }
 
 export class GitHubFetcher implements IFormulaFetcher {
-  constructor(private readonly formulasDir: string) {}
+  constructor(
+    private readonly formulasDir: string,
+    private readonly cloneWithProtocol: "https" | "ssh" = "https"
+  ) {}
 
   private parseRef(formulaRef: string): ParsedFormulaRef {
     const rev = formulaRef.includes("@") ? formulaRef.split("@")[1] : undefined;
@@ -37,6 +40,22 @@ export class GitHubFetcher implements IFormulaFetcher {
     };
   }
 
+  private formHttpsCloneLink(formulaRef: ParsedFormulaRef): string {
+    return `https://github.com/${formulaRef.repo}.git`;
+  }
+
+  private formSshCloneLink(formulaRef: ParsedFormulaRef): string {
+    return `git@github.com:${formulaRef.repo}.git`;
+  }
+
+  private getCloneLink(formulaRef: ParsedFormulaRef): string {
+    if (this.cloneWithProtocol === "https") {
+      return this.formHttpsCloneLink(formulaRef);
+    }
+
+    return this.formSshCloneLink(formulaRef);
+  }
+
   private async clone(formulaRef: ParsedFormulaRef) {
     const repoPath = normalize(join(this.formulasDir, formulaRef.repo));
     await mkdir(repoPath, { recursive: true });
@@ -44,7 +63,7 @@ export class GitHubFetcher implements IFormulaFetcher {
     await git.cwd({ path: repoPath });
 
     if (await isEmptyDir(repoPath)) {
-      await git.clone(`git@github.com:${formulaRef.repo}.git`, repoPath, [
+      await git.clone(this.getCloneLink(formulaRef), repoPath, [
         "--recurse-submodules",
       ]);
     } else {
