@@ -1,6 +1,6 @@
 {
   "name": "@drewpackages/host-common",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "types": "./out/index.d.ts",
   "type": "module",
