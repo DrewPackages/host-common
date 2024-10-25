@@ -42,8 +42,9 @@ export class OffchainExecutor extends BaseStageExecutor {
           .map(([name, val]) => [name, this.state.toValue(val)])
           .map(([name, val]) => `${name}=${val}`)
           .concat(`DREW_WORKDIR=${this.state.toValue(stage.workdir)}`),
-        AttachStdout: true,
+        Tty: false,
         AttachStderr: true,
+        AttachStdin: true,
         HostConfig: { AutoRemove: true, Binds },
       }
     );

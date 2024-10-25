@@ -1,6 +1,7 @@
 import { RegexOutputSpec, ScheduleOutput } from "@drewpackages/engine";
 import { PassThrough } from "stream";
 import { WritableStream } from "memory-streams";
+import isBuffer from "is-buffer";
 
 export abstract class BaseStageExecutor {
   protected createStream(to: "stderr" | "stdout"): {
@@ -16,6 +17,9 @@ export abstract class BaseStageExecutor {
           process.stderr.write(chunk);
         case "stdout":
           process.stdout.write(chunk);
+      }
+      if (isBuffer(chunk)) {
+        (chunk as any)._isBuffer = true;
       }
       inMemory.write(chunk);
     });
